@@ -133,29 +133,17 @@ Instruções
   BOA SORTE!
 
 ------8<------8<------8<------8<---corte arqui---8<------8<------8<------8<-----
+O presente trabalho tem como objetivo construir o parser para cool, a especificação da sintaxe do cool pode ser consultada em: The Cool Reference Manual (https://web.stanford.edu/class/cs143/materials/cool-manual.pdf).
+Primeiramente as regras de Parsing são determinadas:
+De acordo com a definição de nós de AST em cool-tree.aps as regras de parsing são escritas facilmente em cool.y. Como exemplo a definição do construtor de classe:
 
-[Aqui começa sua documentação]
-
-
-
-
-Write-up for PA3
-----------------
-
-Cool syntax specification can be found in [The Cool Reference Manual](http://web.stanford.edu/class/cs143/materials/cool-manual.pdf). (Page 17)
-
-### Write Parsing Rules
-
-According to the definition of AST nodes in `cool-tree.aps`, you can write parsing rules easily in `cool.y`. For example, the definition of the constructor of `class` is as follows:
-
-```cpp
+##########################################################################cpp
 constructor class_(name : Symbol; parent: Symbol;
     features : Features; filename : Symbol): Class_;
-```
+#############################################################################
+a regra de parsing é:
 
-The parsing rule is as follows:
-
-```cpp
+##########################################################################cpp
 class   : CLASS TYPEID '{' feature_list '}' ';' {
             $$ = class_($2, idtable.add_string("Object"), 
                 $4, stringtable.add_string(curr_filename));
@@ -165,13 +153,13 @@ class   : CLASS TYPEID '{' feature_list '}' ';' {
                 stringtable.add_string(curr_filename));
         }
         ;
-```
+#############################################################################
 
-Attention that list phyla have a distinct set of operations for constructing and accessing lists. For each phylum named X there is a phylum called Xs (except for `Classes`, which is a list of Class nodes) of type List[X]. List functions are defined automatically for each list.
+A lista Phyla tem um conjunto distinto de operações para construir e acessar listas. Para cada filo denominado X, exite outro dneominado Xs de tipo list[X], exceto para classes, que é uma lista de nós de classe. As funções da lista são criadas automaticamente para cada lista.
 
-The function `nil_***()` returns an empty list of type phylum. The function `single_***()` makes a list of length 1 out of its phylum argument. The function `append_***()` appends two lists of phylums. For the example of `formal_list`, whose type is `Formals`:
-
-```cpp
+A função nil_***() retorna uma lista vazia do tipo phylum. A função single_***() faz uma lista de comprimento 1 de seu argumento de seu phylum. A função append_***() anexa
+duas listas de phylums. Por exemplo formal_list cujo tipo é Formals:
+############################################################################cpp
 formal_list : {
                 $$ = nil_Formals();
             }
@@ -182,26 +170,23 @@ formal_list : {
                 $$ = append_Formals($1, single_Formals($3));
             }
             ;
-```
+###############################################################################
 
-When you have completed all the parsing rules in `cool.y`, type `make parser` to build the parser. Yacc produces a human-readable dump of the LALR(1) parsing tables in the `cool.output`. You can check whether your parser has any shift-reduce conflicts.
+Após ter completado todas as regras de análise em cool.y digite make parser para construir o analisador. Yacc produz um dump legível das tabelas de análise LALR(1) em cool.output.
+A construção Cool let introduz uma ambiguidade na linguagem. O manual resolve a ambiguidade dizendo que uma expressão let se estende o mais a direita possível.
 
-The Cool `let` construct introduces an ambiguity into the language. The manual resolves the ambiguity by saying that a `let` expression extends as far to the right as possible.
+Se houver um erro em uma definição de classe, mas a classe for encerrada corretamente e a próxima classe estiver sintaticamente correta, o analisador deverá ser capaz de
+reiniciar na próxima definição de classe.
 
-### Error Handling
+Da mesma forma, o analisador deve se recuperar de erros em recursos, indo para o próximo recurso, uma ligação let para a próxima variável e uma expressão dentro de um bloco.
+Portanto um pseudo-notermina 'error' deve ser adicionado para a produção de classe, recurso e assim por diante.
 
-- If there is an error in a class definition but the class is terminated properly and the next class is syntactically correct, the parser should be able to restart at the next class definition.
-- Similarly, the parser should recover from errors in features (going on to the next feature), a `let` binding (going on to the next variable), and an expression inside a `{...}` block.
 
-So you should add the `error` pseudo-nontermina to the production of class, feature, and so on.
+judge.sh é um judge script que compara a saída de parser (./parser) com a referência parser (../../bin/.i686/parser).
 
-## Judge
+rode ./judge.sh ou bash judge.sh, os resultados serão:
 
-`judge.sh` is a judge script which compares the output of my parser (`./parser`) with the reference parser (`../../bin/.i686/parser`).
-
-Run `./judge.sh` or `bash judge.sh`, you should get the following results:
-
-```
+#######################################################################################
 --------Test using ../../examples/arith.cl --------
 Passed
 --------Test using ../../examples/atoi.cl --------
@@ -240,4 +225,5 @@ Passed
 Passed
 --------Test using ../../examples/sort_list.cl --------
 Passed
-```
+###############################################################################################
+
