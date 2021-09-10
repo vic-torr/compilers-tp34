@@ -53,7 +53,6 @@
 #define TAG_OFFSET 0
 #define SIZE_OFFSET 1
 #define DISPTABLE_OFFSET 2
-
 #define INVALID_CLASSTAG -1
 
 #define STRING_SLOTS      1
