@@ -91,6 +91,8 @@
 %type <expression> let
 %type <expression> optional_assign
 /* Precedence declarations go here. */
+
+%right LET IN
 %right ASSIGN
 %left NOT
 %nonassoc LE '<' '='
