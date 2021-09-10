@@ -1,0 +1,1 @@
+bad_examples/bad_dispatch.cl
