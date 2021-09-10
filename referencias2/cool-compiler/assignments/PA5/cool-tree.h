@@ -9,7 +9,6 @@
 //////////////////////////////////////////////////////////
 
 #include <vector>
-
 #include "tree.h"
 #include "cool-tree.handcode.h"
 
