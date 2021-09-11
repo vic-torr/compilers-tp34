@@ -149,8 +149,13 @@ Instruções
 A implementação do compilador será facilitada se for implementada uma máquina de pilha, na máquina de pilha
 todas as variáveis e argumentos das funções estão em um só local, ou seja na pilha, resultados intermediários
 também vai para a pilha. O topo da pilha é representado por um registrador, dessa forma é economizado um acesso a memória. 
-Após o fim de cada operação da geração de código o resultado deve ser guardado no registrador e a pilha deve ser restaurada, essas duas invariantes e que são responsáveis pela simplificação na geração do código.
+Após o fim de cada operação da geração de código o resultado deve ser guardado no registrador e a pilha deve ser restaurada,
+essas duas invariantes e que são responsáveis pela simplificação na geração do código.
 Apesar da simplificação o código assembly gerado terá mais linhas de código.
 
-A classe Environment foi criada para que no fim de cada operação a pilha seja mantida, pois ela possui os métodos push e pop, para empilhar e desempilhar. Cada vez que algum elemento é empilhado, ele deve ser desempilhado posteriormente para manter a pilha como ela era após o fim da operação. Em environment também é possível retornar a posição de um símbolo da pilha de símbolos, ou seja saber se tem algum simbolo na pilha.
+A classe Environment foi criada para que no fim de cada operação a pilha seja mantida,
+pois ela possui os métodos push e pop, para empilhar e desempilhar. Cada vez que algum elemento é empilhado,
+ele deve ser desempilhado posteriormente para manter a pilha como ela era após o fim da operação.
+Em environment também é possível retornar a posição de um símbolo da pilha de símbolos, 
+ou seja saber se tem algum simbolo na pilha.
 
