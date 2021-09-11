@@ -23,9 +23,9 @@
 
 #include "cgen.h"
 
+#include "cgen_gc.h"
 #include <map>
 #include <vector>
-#include "cgen_gc.h"
 
 std::map<Symbol, Class_> class_map;
 
