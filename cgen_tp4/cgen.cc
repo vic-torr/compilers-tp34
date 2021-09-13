@@ -1643,21 +1643,6 @@ void object_class::code(ostream &s, Environment &env) {
   emit_move(ACC, SELF, s);
 }
 
-void isvoid_class::code(ostream &s, Environment &env) {
-  e1->code(s, env);
-  emit_move(T1, ACC, s);
-
-  emit_load_bool(ACC, BoolConst(1), s);
-
-  emit_beq(T1, ZERO, label_num, s);
-  emit_load_bool(ACC, BoolConst(0), s);
-
-  emit_label_def(label_num++, s);
-}
-void no_expr_class::code(ostream &s, Environment &env) {
-  emit_move(ACC, ZERO, s);
-}
-
 
 void method_class::code(ostream &s, Environment &env) {
   emit_method_ref(env.get_cls()->get_name(), name, s);

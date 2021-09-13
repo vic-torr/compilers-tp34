@@ -158,4 +158,36 @@ pois ela possui os métodos push e pop, para empilhar e desempilhar. Cada vez qu
 ele deve ser desempilhado posteriormente para manter a pilha como ela era após o fim da operação.
 Em environment também é possível retornar a posição de um símbolo da pilha de símbolos, 
 ou seja saber se tem algum simbolo na pilha.
+  
+ Cmo Cool é uma linguagem orientada a objetos,  requer um layout de objeto de 
+memória definido e consistente em toda a fase de geração de código.
 
+O layout do objeto Cool é especificado no COOL Runtime System. Não foi 
+implementado um garbage colector por fins de simplicidade e porque o Cool tem um coletor 
+de lixo fornecido e uma biblioteca de sistema de tempo de execução. Portanto, 
+no caso de implementação de layout de objeto personalizado, deve haver um wrapper
+de montagem de baixo nível em torno do sistema de tempo de execução fornecido 
+e o layout de objeto real. Decidi manter as coisas simples e implementar de 
+acordo com o desenvolvimento e uma especificação de sistema de tempo de execução
+padrão.
+Nesse caso, a fase de geração do código pode ser conceitualmente dividida nas 
+seguintes partes:
+    - Construção de árvore de dependência de classe
+    - Transversando uma árvore de dependência de classe enquanto preenche as 
+        informações de relação de herança
+    - Construir um contexto de compilação para cada classe - envolve o processamento
+       dos métodos e atributos da classe, atribuindo deslocamentos de memória
+        para cada método e atributo
+    - Geração de tabelas de despacho para cada contexto de compilação de 
+      classe - como as tabelas de despacho são usadas para invocar uma chamada
+       de método em um objeto de heap arbitrário de acordo com o deslocamento d
+       e método conhecido na tabela de despacho
+    - Emitir código para cada contexto de compilação de classe - gera tabelas 
+    de protótipo de classe etc
+    - Emitir código para cada método de classe 
+
+
+Teste e validação
+
+Não foi possível terminar a tempo nem a validar, mas foi um excelente exemplo prático
+dos conteudos da disciplina.
